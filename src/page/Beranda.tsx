@@ -224,7 +224,7 @@ export default function Beranda() {
 
       <section
         id="hero competition"
-        className="py-10 flex gap-10 justify-between items-center "
+        className="py-10 flex gap-10 justify-between items-center mt-70"
       >
         <div className="w-1/3">
           <img
