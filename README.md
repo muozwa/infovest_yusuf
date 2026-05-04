@@ -1,4 +1,4 @@
-# Form Pendaftaran — Tugas Praktikum
+# InvoFest — Tugas Praktikum
 
 ## Tampilan Halaman Utama InvoFest
 
