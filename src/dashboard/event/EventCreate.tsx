@@ -1,78 +1,170 @@
-import { z } from "zod";
-import { zodResolver } from "@hookform/resolvers/zod";
-import InputText from "../../components/ui/InputText";
-import { Button } from "../../components/ui/Button";
-import { useForm } from "react-hook-form";
-import InputSelectEvent from "../../components/ui/Select";
-import InputDate from "../../components/ui/InputDate";
-import Textarea from "../../components/ui/TextArea";
-
-type FormData = {
-  nama: string;
-  category: string;
-  date: string;
-  bio: string;
-};
-const schema = z.object({
-  nama: z.string().min(1, "Nama harus diisi"),
-  category: z.string().min(1, "Category harus dipilih"),
-  date: z.string().min(1, "Tanggal harus diisi"),
-  bio: z.string().max(100, "Bio maksimal 100 karakter"),
-});
+import { useNavigate } from "react-router-dom";
+import { useEffect, useState } from "react";
 
 export default function EventCreate() {
-  const {
-    register,
-    handleSubmit,
-    setValue,
-    formState: { errors },
-  } = useForm<FormData>({ resolver: zodResolver(schema), mode: "onChange" });
+  const navigate = useNavigate();
+  const [isLoading, setIsLoading] = useState(false);
+  const [errorMsg, setErrorMsg] = useState("");
+  const [categories, setCategories] = useState<{ id: number; name: string }[]>([]);
+  const [speakers, setSpeakers] = useState<{ id: number; nama: string; role: string }[]>([]);
+  const [loadingData, setLoadingData] = useState(true);
 
-  const onSubmit = (data: FormData) => {
-    console.log(data);
+  // State untuk form
+  const [formData, setFormData] = useState({
+    name: "",
+    categoryId: "",
+    pembicaraId: "",
+    tanggal: "",
+    description: "",
+  });
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const [catRes, spkRes] = await Promise.all([
+          fetch("http://localhost:3000/api/categories"),
+          fetch("http://localhost:3000/api/pembicara"),
+        ]);
+        if (catRes.ok) setCategories(await catRes.json());
+        if (spkRes.ok) setSpeakers(await spkRes.json());
+      } catch (error) {
+        console.error("Gagal mengambil data:", error);
+      } finally {
+        setLoadingData(false);
+      }
+    };
+    fetchData();
+  }, []);
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
+    setFormData({ ...formData, [e.target.name]: e.target.value });
   };
+
+  const onSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setIsLoading(true);
+    setErrorMsg("");
+
+    // Validasi sederhana
+    if (!formData.name || !formData.categoryId || !formData.pembicaraId || !formData.tanggal) {
+      setErrorMsg("Semua field wajib diisi");
+      setIsLoading(false);
+      return;
+    }
+
+    try {
+      const response = await fetch(`${import.meta.env.VITE_API_URL}/events`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          name: formData.name,
+          categoryId: parseInt(formData.categoryId),
+          pembicaraId: parseInt(formData.pembicaraId),
+          tanggal: formData.tanggal,
+          description: formData.description,
+        }),
+      });
+      if (!response.ok) {
+        const err = await response.json();
+        throw new Error(err.error || "Gagal menambahkan event");
+      }
+      navigate("/dashboard/event");
+    } catch (error: any) {
+      setErrorMsg(error.message);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  if (loadingData) return <div className="p-6">Loading data kategori & pembicara...</div>;
 
   return (
     <div className="p-6">
-      <h2 className="text-2xl font-black uppercase tracking-tight border-b-4 border-black pb-4 mb-6">
+      <h2 className="text-xl font-semibold text-amber-800 border-b border-amber-200 pb-3 mb-5">
         New Event
       </h2>
       <form
-        onSubmit={handleSubmit(onSubmit)}
-        className="border-4 border-black shadow-[6px_6px_0px_0px_#000] bg-white p-6 flex flex-col gap-4 max-w-md"
+        onSubmit={onSubmit}
+        className="border border-amber-200 rounded-xl shadow-sm bg-white p-6 flex flex-col gap-4 max-w-md"
       >
-        <InputText
-          label="New Event"
-          nama="nama"
-          register={register}
-          error={errors.nama?.message}
-        />
-        <InputSelectEvent
-          label="Pilih Category"
-          nama="category"
-          register={register}
-          setValue={setValue}
-          error={errors.category?.message}
-        />
-        <InputDate
-          label="Tanggal Event"
-          nama="date"
-          register={register}
-          setValue={setValue}
-          error={errors.date?.message}
-        />
-          <Textarea
-          label="Deskripsi Event"
-          nama="bio"
-          register={register}
-          error={errors.bio?.message}
-        />
+        {/* Nama Event */}
+        <div>
+          <label className="block text-sm font-medium text-amber-700 mb-1">Nama Event</label>
+          <input
+            type="text"
+            name="name"
+            value={formData.name}
+            onChange={handleChange}
+            className="w-full border border-amber-200 rounded-md px-3 py-2"
+          />
+        </div>
 
-        <Button
-          label="Add"
-          variant="primary"
-          className="bg-amber-100 text-amber-800 font-medium px-5 py-2 rounded-md border border-amber-300 shadow-sm hover:bg-amber-200 transition-all"
-        />
+        {/* Kategori */}
+        <div>
+          <label className="block text-sm font-medium text-amber-700 mb-1">Kategori</label>
+          <select
+            name="categoryId"
+            value={formData.categoryId}
+            onChange={handleChange}
+            className="w-full border border-amber-200 rounded-md px-3 py-2"
+          >
+            <option value="">-- Pilih Kategori --</option>
+            {categories.map((cat) => (
+              <option key={cat.id} value={cat.id}>{cat.name}</option>
+            ))}
+          </select>
+        </div>
+
+        {/* Pembicara */}
+        <div>
+          <label className="block text-sm font-medium text-amber-700 mb-1">Pembicara</label>
+          <select
+            name="pembicaraId"
+            value={formData.pembicaraId}
+            onChange={handleChange}
+            className="w-full border border-amber-200 rounded-md px-3 py-2"
+          >
+            <option value="">-- Pilih Pembicara --</option>
+            {speakers.map((spk) => (
+              <option key={spk.id} value={spk.id}>{spk.nama} - {spk.role}</option>
+            ))}
+          </select>
+        </div>
+
+        {/* Tanggal */}
+        <div>
+          <label className="block text-sm font-medium text-amber-700 mb-1">Tanggal Event</label>
+          <input
+            type="date"
+            name="tanggal"
+            value={formData.tanggal}
+            onChange={handleChange}
+            className="w-full border border-amber-200 rounded-md px-3 py-2"
+          />
+        </div>
+
+        {/* Deskripsi */}
+        <div>
+          <label className="block text-sm font-medium text-amber-700 mb-1">Deskripsi Event</label>
+          <textarea
+            name="description"
+            rows={3}
+            value={formData.description}
+            onChange={handleChange}
+            className="w-full border border-amber-200 rounded-md px-3 py-2"
+            placeholder="Masukkan deskripsi event..."
+          ></textarea>
+        </div>
+
+        {errorMsg && <p className="text-red-500 text-sm">{errorMsg}</p>}
+
+        <button
+          type="submit"
+          disabled={isLoading}
+          className="bg-amber-100 text-amber-800 font-medium px-5 py-2 rounded-md border border-amber-300 shadow-sm hover:bg-amber-200 transition-all disabled:opacity-50"
+        >
+          {isLoading ? "Menyimpan..." : "Add"}
+        </button>
       </form>
     </div>
   );
