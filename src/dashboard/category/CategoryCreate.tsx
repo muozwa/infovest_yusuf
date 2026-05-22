@@ -8,8 +8,7 @@ type FormData = {
   nama: string;
 };
 const schema = z.object({
-    nama : z.string().min(1, "Nama Category harus diisi"),
-
+  nama: z.string().min(1, "Nama Category harus diisi"),
 });
 
 export default function CategoryCreate() {
@@ -26,25 +25,26 @@ export default function CategoryCreate() {
   };
 
   return (
-   <div className="p-6">
-    <h2 className="text-2xl font-black uppercase tracking-tight border-b-4 border-black pb-4 mb-6">New Category</h2>
-    <form
+    <div className="p-6">
+      <h2 className="text-xl font-semibold text-amber-800 border-b border-amber-200 pb-3 mb-5">
+        New Category
+      </h2>
+      <form
         onSubmit={handleSubmit(onSubmit)}
-        className="border-4 border-black shadow-[6px_6px_0px_0px_#000] bg-white p-6 flex flex-col gap-4 max-w-md"
-    >
+        className="border border-amber-200 rounded-xl shadow-sm bg-white p-6 flex flex-col gap-4 max-w-md"
+      >
         <InputText
-            label="New Category"
-            nama="nama"
-            register={register}
-            error={errors.nama?.message}
+          label="New Category"
+          nama="nama"
+          register={register}
+          error={errors.nama?.message}
         />
         <Button
-            label="Add"
-            variant="primary"
-            className="bg-yellow-300 text-black font-black uppercase border-2 border-black shadow-[3px_3px_0px_0px_#000] hover:bg-yellow-400 hover:shadow-[5px_5px_0px_0px_#000] hover:-translate-x-0.5 hover:-translate-y-0.5 active:translate-x-0.5 active:translate-y-0.5 active:shadow-[2px_2px_0px_0px_#000] transition-all"
+          label="Add"
+          variant="primary"
+          className="bg-amber-100 text-amber-800 font-medium px-5 py-2 rounded-md border border-amber-300 shadow-sm hover:bg-amber-200 transition-all"
         />
-        
-    </form>
-</div>
+      </form>
+    </div>
   );
 }

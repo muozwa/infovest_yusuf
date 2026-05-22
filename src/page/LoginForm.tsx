@@ -26,7 +26,7 @@ export default function LoginForm() {
              formState: {errors}} = useForm<FormData>({resolver: zodResolver(schema)});
 
     const onSubmit = (data : FormData) => {
-        if(data.email === "hammamghazi54@gmail.com" && data.password === "password123") {
+        if(data.email === "24090067@gmail.com" && data.password === "password123") {
             alert("Login berhasil!");
             login(data.email);
             navigate("/dashboard");

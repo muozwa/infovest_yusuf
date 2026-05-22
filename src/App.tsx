@@ -1,4 +1,4 @@
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import RegisterForm from "./page/RegisterForm";
 import Beranda from "./page/Beranda";
 import Competition from "./page/Competition";
@@ -23,7 +23,8 @@ function App() {
     <BrowserRouter>
       <Routes>
         <Route element={<MainLayout />}>
-          <Route path="/" element={<Beranda />} />
+          <Route path="/" element={<Navigate to="/login" replace />} />
+          <Route path="/beranda" element={<Beranda />} />
           <Route path="/competition" element={<Competition />} />
           <Route path="/seminar" element={<Seminar />} />
           <Route path="/workshop" element={<Workshop />} />

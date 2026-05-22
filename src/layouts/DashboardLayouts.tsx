@@ -12,30 +12,55 @@ export default function DashboardLayouts() {
   };
 
   return (
-    <div className="flex  w-full">
-      <div className="w-64 p-4 bg-yellow-300 min-h-screen flex flex-col justify-between border-r-4 border-black sticky top-0 self-start">
-        <div className="border-b-4 border-black text-center p-2">
-          <h2 className="text-black text-2xl font-black uppercase tracking-tight">InvoFest Dashboard</h2>
-        </div>
-
-        <div className="flex flex-col gap-3">
-          <Link to="/dashboard" className="text-black font-bold uppercase border-2 border-black p-2 bg-white shadow-[3px_3px_0px_0px_#000] hover:bg-yellow-400 hover:shadow-[5px_5px_0px_0px_#000] hover:-translate-x-0.5 hover:-translate-y-0.5 transition-all">Dashboard</Link>
-          <Link to="/dashboard/category" className="text-black font-bold uppercase border-2 border-black p-2 bg-white shadow-[3px_3px_0px_0px_#000] hover:bg-yellow-400 hover:shadow-[5px_5px_0px_0px_#000] hover:-translate-x-0.5 hover:-translate-y-0.5 transition-all">Category</Link>
-          <Link to="/dashboard/event" className="text-black font-bold uppercase border-2 border-black p-2 bg-white shadow-[3px_3px_0px_0px_#000] hover:bg-yellow-400 hover:shadow-[5px_5px_0px_0px_#000] hover:-translate-x-0.5 hover:-translate-y-0.5 transition-all">Event</Link>
-          <Link to="/dashboard/seminar" className="text-black font-bold uppercase border-2 border-black p-2 bg-white shadow-[3px_3px_0px_0px_#000] hover:bg-yellow-400 hover:shadow-[5px_5px_0px_0px_#000] hover:-translate-x-0.5 hover:-translate-y-0.5 transition-all">Seminar</Link>
-        </div>
-
+    <div className="flex w-full">
+      {/* Sidebar - warna coksu soft */}
+      <div className="w-64 p-4 bg-amber-50 min-h-screen flex flex-col justify-between border-r border-amber-200 sticky top-0 self-start shadow-sm">
         <div>
+          <div className="border-b border-amber-200 text-center p-3 mb-6">
+            <h2 className="text-amber-800 text-xl font-semibold tracking-tight">InvoFest Dashboard</h2>
+          </div>
+
+          <div className="flex flex-col gap-2">
+            <Link
+              to="/dashboard"
+              className="text-amber-700 font-medium px-3 py-2 rounded-lg hover:bg-amber-100 transition-colors"
+            >
+              Dashboard
+            </Link>
+            <Link
+              to="/dashboard/category"
+              className="text-amber-700 font-medium px-3 py-2 rounded-lg hover:bg-amber-100 transition-colors"
+            >
+              Category
+            </Link>
+            <Link
+              to="/dashboard/event"
+              className="text-amber-700 font-medium px-3 py-2 rounded-lg hover:bg-amber-100 transition-colors"
+            >
+              Event
+            </Link>
+            <Link
+              to="/dashboard/seminar"
+              className="text-amber-700 font-medium px-3 py-2 rounded-lg hover:bg-amber-100 transition-colors"
+            >
+              Seminar
+            </Link>
+          </div>
+        </div>
+
+        <div className="pt-4 border-t border-amber-200">
           <button
             onClick={handleLogout}
-            className="bg-red-500 p-2 text-white w-full font-black uppercase border-2 border-black shadow-[4px_4px_0px_0px_#000] hover:bg-red-600 hover:shadow-[6px_6px_0px_0px_#000] hover:-translate-x-0.5 hover:-translate-y-0.5 active:translate-x-0.5 active:translate-y-0.5 active:shadow-[2px_2px_0px_0px_#000] transition-all"
+            className="bg-white text-amber-700 px-3 py-2 rounded-lg w-full font-medium border border-amber-200 hover:bg-amber-100 transition-colors"
             type="button"
           >
             Logout
           </button>
         </div>
       </div>
-      <div className="w-full p-4 bg-orange-50">
+
+      {/* Content area - background soft cream */}
+      <div className="w-full p-6 bg-stone-50">
         <Outlet />
       </div>
     </div>
