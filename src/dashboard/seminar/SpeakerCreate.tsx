@@ -14,7 +14,7 @@ const schema = z.object({
     role: z.string().min(1, "Role must be filled"),
 });
 
-export default function SpeakerCreate() {
+export default function PembicaraCreate() {
     const navigate = useNavigate();
     const [isLoading, setIsLoading] = useState(false);
     const [errorMsg, setErrorMsg] = useState("");
@@ -60,7 +60,7 @@ export default function SpeakerCreate() {
             >
                 <InputText
                     label="Nama Speaker"
-                    nama="nama"
+                    nama="name"
                     register={register}
                     error={errors.name?.message}
                 />

@@ -6,7 +6,7 @@ export default function EventCreate() {
   const [isLoading, setIsLoading] = useState(false);
   const [errorMsg, setErrorMsg] = useState("");
   const [categories, setCategories] = useState<{ id: number; name: string }[]>([]);
-  const [speakers, setSpeakers] = useState<{ id: number; nama: string; role: string }[]>([]);
+  const [speakers, setSpeakers] = useState<{ id: number; name: string; role: string }[]>([]);
   const [loadingData, setLoadingData] = useState(true);
 
   // State untuk form
@@ -22,8 +22,8 @@ export default function EventCreate() {
     const fetchData = async () => {
       try {
         const [catRes, spkRes] = await Promise.all([
-          fetch("http://localhost:3000/api/categories"),
-          fetch("http://localhost:3000/api/pembicara"),
+          fetch(`${import.meta.env.VITE_API_URL}/categories`),
+          fetch(`${import.meta.env.VITE_API_URL}/pembicara`),
         ]);
         if (catRes.ok) setCategories(await catRes.json());
         if (spkRes.ok) setSpeakers(await spkRes.json());
@@ -126,7 +126,7 @@ export default function EventCreate() {
           >
             <option value="">-- Pilih Pembicara --</option>
             {speakers.map((spk) => (
-              <option key={spk.id} value={spk.id}>{spk.nama} - {spk.role}</option>
+              <option key={spk.id} value={spk.id}>{spk.name} - {spk.role}</option>
             ))}
           </select>
         </div>

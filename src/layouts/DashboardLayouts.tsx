@@ -45,6 +45,14 @@ export default function DashboardLayouts() {
             >
               Seminar
             </Link>
+
+            <Link
+              to="/dashboard/biodata"
+              className="text-amber-700 font-medium px-3 py-2 rounded-lg hover:bg-amber-100 transition-colors"
+            >
+              Biodata
+            </Link>
+
           </div>
         </div>
 

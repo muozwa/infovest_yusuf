@@ -17,6 +17,7 @@ import CategoryCreate from "./dashboard/category/CategoryCreate";
 import SeminarIndex from "./dashboard/seminar/SeminarIndex";
 import SpeakerCreate from "./dashboard/seminar/SpeakerCreate";
 import EventCreate from "./dashboard/event/EventCreate";
+import Biodata from "./dashboard/biodata/biodata";
 
 function App() {
   return (
@@ -26,6 +27,7 @@ function App() {
           <Route path="/" element={<Navigate to="/login" replace />} />
           <Route path="/beranda" element={<Beranda />} />
           <Route path="/competition" element={<Competition />} />
+          <Route path="/dashboard/biodata" element={<Biodata />} />
           <Route path="/seminar" element={<Seminar />} />
           <Route path="/workshop" element={<Workshop />} />
           <Route path="/talkshow" element={<Talkshow />} />
