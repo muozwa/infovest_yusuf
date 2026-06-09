@@ -52,7 +52,7 @@ export default function LoginForm() {
             register={register} 
             error={errors.password?.message} />
 
-            <Button label="Login" variant="primary" className="rounded-3xl" />
+            <Button tittle="Login" variant="primary" className="rounded-3xl" />
 
             <p className="mt-4 text-sm">belum punya akun? <a href="/register" className="text-blue-500 hover:underline">Daftar sekarang</a></p>
         </form>

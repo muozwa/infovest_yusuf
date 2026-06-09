@@ -41,7 +41,7 @@ export default function PembicaraCreate() {
                 throw new Error(err.error || "Gagal menambahkan pembicara");
             }
             reset();
-            navigate("/dashboard/seminar"); // atau "/dashboard/speaker" sesuai route kamu
+            navigate("/dashboard/pembicara"); // atau "/dashboard/speaker" sesuai route kamu
         } catch (error: any) {
             setErrorMsg(error.message);
         } finally {
@@ -59,7 +59,7 @@ export default function PembicaraCreate() {
                 className="border border-amber-200 rounded-xl shadow-sm bg-white p-6 flex flex-col gap-4 max-w-md"
             >
                 <InputText
-                    label="Nama Speaker"
+                    label="Nama Pembicara"
                     nama="name"
                     register={register}
                     error={errors.name?.message}

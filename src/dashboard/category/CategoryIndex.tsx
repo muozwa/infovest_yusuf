@@ -73,10 +73,7 @@ export default function CategoryIndex() {
                 <td className="px-4 py-2 border-b border-amber-100">{index + 1}</td>
                 <td className="px-4 py-2 border-b border-amber-100">{cat.name}</td>
                 <td className="px-4 py-2 border-b border-amber-100 flex gap-2">
-                  <Link
-                    to={`/dashboard/category/edit/${cat.id}`}
-                    className="text-amber-700 hover:underline text-xs"
-                  >
+                  <Link to={`/dashboard/category/edit/${cat.id}`} className="text-amber-700 hover:underline text-xs">
                     Edit
                   </Link>
                   <button

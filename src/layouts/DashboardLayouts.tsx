@@ -40,10 +40,10 @@ export default function DashboardLayouts() {
               Event
             </Link>
             <Link
-              to="/dashboard/seminar"
+              to="/dashboard/pembicara"
               className="text-amber-700 font-medium px-3 py-2 rounded-lg hover:bg-amber-100 transition-colors"
             >
-              Seminar
+              Pembicara
             </Link>
 
             <Link
@@ -51,6 +51,13 @@ export default function DashboardLayouts() {
               className="text-amber-700 font-medium px-3 py-2 rounded-lg hover:bg-amber-100 transition-colors"
             >
               Biodata
+            </Link>
+
+            <Link
+              to="/dashboard/user"
+              className="text-amber-700 font-medium px-3 py-2 rounded-lg hover:bg-amber-100 transition-colors"
+            >
+              User
             </Link>
 
           </div>
